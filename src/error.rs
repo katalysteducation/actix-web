@@ -483,6 +483,9 @@ pub enum UrlencodedError {
     /// Parse error
     #[fail(display = "Parse error")]
     Parse,
+    /// Deserialization error
+    #[fail(display = "Cannot deserialize: {}", _0)]
+    Deserialize(#[cause] serde_urlencoded::de::Error),
     /// Payload error
     #[fail(display = "Error that occur during reading payload: {}", _0)]
     Payload(#[cause] PayloadError),

@@ -597,7 +597,7 @@ where
                         .decode(&body, DecoderTrap::Strict)
                         .map_err(|_| UrlencodedError::Parse)?;
                     serde_urlencoded::from_str::<U>(&body)
-                        .map_err(|_| UrlencodedError::Parse)
+                        .map_err(|e| UrlencodedError::Deserialize(e))
                 }
             });
         self.fut = Some(Box::new(fut));
