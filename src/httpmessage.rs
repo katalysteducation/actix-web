@@ -591,13 +591,13 @@ where
             }).and_then(move |body| {
                 if (encoding as *const Encoding) == UTF_8 {
                     serde_urlencoded::from_bytes::<U>(&body)
-                        .map_err(|_| UrlencodedError::Parse)
+                        .map_err(UrlencodedError::Deserialize)
                 } else {
                     let body = encoding
                         .decode(&body, DecoderTrap::Strict)
-                        .map_err(|_| UrlencodedError::Parse)?;
+                        .map_err(UrlencodedError::Parse)?;
                     serde_urlencoded::from_str::<U>(&body)
-                        .map_err(|e| UrlencodedError::Deserialize(e))
+                        .map_err(UrlencodedError::Deserialize)
                 }
             });
         self.fut = Some(Box::new(fut));

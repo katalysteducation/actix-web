@@ -481,8 +481,8 @@ pub enum UrlencodedError {
     #[fail(display = "Content type error")]
     ContentType,
     /// Parse error
-    #[fail(display = "Parse error")]
-    Parse,
+    #[fail(display = "Error decoding: {}", _0)]
+    Parse(std::borrow::Cow<'static, str>),
     /// Deserialization error
     #[fail(display = "Cannot deserialize: {}", _0)]
     Deserialize(#[cause] serde_urlencoded::de::Error),
